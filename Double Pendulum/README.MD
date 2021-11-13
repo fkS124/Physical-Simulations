@@ -37,3 +37,4 @@ dm=float|integer -> as it's a mass gradient, the difference of mass between two 
 a1=a*pi/b -> where a and b are two integers|floats, basically the first angle.
 a2=a*pi/b -> where a and b are two integers|floats, basically the second angle.
 ```
+When initialized, just press enter to start/pause the simulation !
