@@ -1,11 +1,11 @@
-## Multiple Double Pendulums Simulation
+# Multiple Double Pendulums Simulation
 
 Simulation of several dobule pendulums made with python.
 Using the great SDL wrapper pygame ! (more infos at https://www.pygame.org/)
 
 Thanks to https://www.myphysicslab.com/pendulum/double-pendulum-en.html for the calculations of the exact formulas.
 
-# Setup
+## Setup
 
 Run this command in the main directory :
 ```
@@ -16,7 +16,7 @@ if it's not working, try :
 py -m pip install -r requirements.txt
 ```
 
-# Usage
+## Usage
 
 To run the simulation using default parameters just run the program normally :
 ```
