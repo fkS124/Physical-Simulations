@@ -39,6 +39,8 @@ def _resolve_collision_screen_limits(bubble: Bubble, w: int, h: int):
     # if the bubble hasn't bounced, do nothing
     if bubble.vel == initial_vel:
         bubble.next_vel = bubble.vel
+        if bubble.vel.magnitude() > 1000:
+            print(bubble.vel, bubble.pos)
 
     # otherwise, apply the bouncing effect
     else:
@@ -48,28 +50,28 @@ def _resolve_collision_screen_limits(bubble: Bubble, w: int, h: int):
         if bubble.vel.y != initial_vel.y:
             bubble.next_vel.y = -initial_vel.y
 
+    
+        
+
 
 def _resolve_collision_two_bubbles(first_bubble: Bubble, second_bubble: Bubble):
-    moved_first_bubble = first_bubble.move(first_bubble.vel)
-    moved_second_bubble = second_bubble.move(second_bubble.vel)
+    b1, b2 = first_bubble, second_bubble
 
-    if not moved_second_bubble.collide(moved_first_bubble) or (first_bubble.vel + second_bubble.vel).magnitude() == 0:
+    if (hypothetical_distance := (b1.pos + b1.vel).distance_to(b2.pos + b2.vel)) > (tot_radius := b1.radius + b2.radius) or (first_bubble.vel + second_bubble.vel).magnitude() == 0:
         return
 
-    b1, b2 = first_bubble, second_bubble
-    D = moved_second_bubble.pos.distance_to(moved_first_bubble.pos)
-    D_th = b1.radius + b2.radius
+    ratio = min(hypothetical_distance / tot_radius, 1)
 
-    initial_b1_vel = b1.vel.copy()
-    initial_b2_vel = b2.vel.copy()
-
-    b1.vel *= D / D_th
-    b2.vel *= D / D_th
+    initial_b1_vel_l = b1.vel.length()
+    initial_b2_vel_l = b2.vel.length()
+    
+    b1.vel *= ratio
+    b2.vel *= ratio
 
     mv_pos1, mv_pos2 = b1.pos + b1.vel, b2.pos + b2.vel
 
-    b1.next_vel.xy = (mv_pos1 - mv_pos2).normalize() * initial_b1_vel.length()
-    b2.next_vel.xy = (mv_pos2 - mv_pos1).normalize() * initial_b2_vel.length()
+
+    b1.next_vel.xy = (mv_pos1 - mv_pos2).normalize() * initial_b1_vel_l
+    b2.next_vel.xy = (mv_pos2 - mv_pos1).normalize() * initial_b2_vel_l
 
     # TODO : add the real physic equations
-

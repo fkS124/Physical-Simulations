@@ -59,7 +59,7 @@ def _main_loop(screen: pg.Surface):
     fps = 60
 
     # bubbles
-    n_bubbles = 100
+    n_bubbles = 20
     bubbles = _initialize_bubbles(n=n_bubbles, w=w, h=h)
 
     while running:
@@ -82,13 +82,13 @@ def _main_loop(screen: pg.Surface):
             bubble.update_pos()
 
         pg.display.update()
-        pg.display.set_caption(f"Elastic Collision Simulation. [entity_count={n_bubbles}, "
+        pg.display.set_caption(f"Elastic Collision Simulation. [entity_count={len(bubbles)}, "
                                f"fps={round(clock.get_fps(), 2)}, friction={bubbles[0].friction_on}]")
         clock.tick(fps)
 
 
 def main():
-    screen = _initialize(1000, 1000)
+    screen = _initialize(1000, 500)
     pg.display.set_caption("Elastic Collision Simulation.")
     _main_loop(screen=screen)
     _quit()
